@@ -21,3 +21,8 @@ http://localhost:5004/
 
 
 Agora você já pode começar a contribuir!
+
+
+## Testando
+
+```docker-compose -f docker-compose-dev.yml run base python manage.py test```
