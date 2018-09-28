@@ -9,12 +9,13 @@
 
  </div> 
 
+
 # Configurando o ambiente
 Para instruções de como instalar o Docker e o Docker-compose clique [aqui](https://github.com/Kalkuli/2018.2-Kalkuli_Front-End/blob/master/README.md).
 
 ***   
 
-### Colocando no ar
+## Colocando no ar
 Com o _Docker_ e _Docker-Compose_ instalados, basta apenas utilizar os comandos:
 
 ```
@@ -29,10 +30,11 @@ Abra outro terminal, e execute o comando:
 
 
 ```
-docker-compose -f docker-compose-dev.yml run base python manage.py recreate_db
+docker-compose -f docker-compose-dev.yml run base python manage.py recreatedb
 ```
 
 Acesse o servidor local no endereço apresentado abaixo:
+
 
 [localhost:5004](http://localhost:5004/)    
 
