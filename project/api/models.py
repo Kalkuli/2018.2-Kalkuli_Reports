@@ -9,7 +9,7 @@ class Report(db.Model):
     date_to        = db.Column(db.DateTime, nullable=False)
     total_cost     = db.Column(db.Float,    nullable=False)
     total_tax_cost = db.Column(db.Float,    nullable=False)
-    tagUseReports  = db.relationship('tagUseReport',   backref='report', lazy=True)
+#    tagUseReports  = db.relationship('tagUseReport',   backref='report', lazy=True)
 
     def __init__(self, company_id, date_from, date_to, total_cost, total_tax_cost):
         self.company_id     = company_id 
