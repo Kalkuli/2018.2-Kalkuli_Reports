@@ -10,7 +10,13 @@
  </div> 
 
 
-# Configurando o ambiente
+## Deploy    
+
+A ultima versão do app pode ser encontrada em: https://kalkuli-reports.herokuapp.com
+
+***   
+
+## Configurando o ambiente
 Para instruções de como instalar o Docker e o Docker-compose clique [aqui](https://github.com/Kalkuli/2018.2-Kalkuli_Front-End/blob/master/README.md).
 
 ***   
@@ -40,6 +46,7 @@ Acesse o servidor local no endereço apresentado abaixo:
 
 Agora você já pode começar a contribuir!
 
+***   
 
 ## Testando
 
