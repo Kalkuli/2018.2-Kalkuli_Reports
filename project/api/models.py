@@ -4,12 +4,12 @@ from project import db
 class Report(db.Model):
     __tablename__ = 'report'
     id             = db.Column(db.Integer,  primary_key=True, autoincrement=True)
-    company_id     = db.Column(db.Integer,  nullable=False)
+    company_id     = db.Column(db.Integer,  nullable=True)
     date_from      = db.Column(db.DateTime, nullable=False)
     date_to        = db.Column(db.DateTime, nullable=False)
-    total_cost     = db.Column(db.Float,    nullable=False)
-    total_tax_cost = db.Column(db.Float,    nullable=False)
-    tagUseReports  = db.relationship('tagUseReport',   backref='report', lazy=True)
+    total_cost     = db.Column(db.String,    nullable=False)
+    total_tax_cost = db.Column(db.Float,    nullable=True)
+    #tagUseReports  = db.relationship('tagUseReport',   backref='report', lazy=True)
 
     def __init__(self, company_id, date_from, date_to, total_cost, total_tax_cost):
         self.company_id     = company_id 
