@@ -18,11 +18,11 @@ def reports():
             'error': 'empty json'
         }), 400
 
-    reports = data.get('receipts')
+    receipts = data.get('receipts')
 
     sum = 0
 
-    for report in reports:
+    for receipt in receipts:
         if not report.get('total_price'):
             return jsonify({
                 'error': 'empty total_price'
@@ -32,30 +32,10 @@ def reports():
     sum = str(sum)
 
     return jsonify({
-        'receipts': reports,
+        'receipts': receipts,
         'total_cost': sum 
     }), 200
 
-@reports_blueprint.route('/sum_receipts', methods=['GET'])
-def sum_receipts():
-
-    sum = 0
-
-    for report in reports:
-        if not report.get('total_price'):
-            return jsonify({
-                'error': 'empty total_price'
-            }), 400
-        sum += report.get('total_price')
-
-    sum = str(sum)
-
-    response = {
-        'status': 'success',
-        'sum': sum
-    }
-
-    return jsonify(response), 200
 
 
 @reports_blueprint.route('/add_report', methods=['POST'])
