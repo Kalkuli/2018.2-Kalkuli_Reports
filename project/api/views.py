@@ -41,13 +41,11 @@ def reports():
 @reports_blueprint.route('/add_report', methods=['POST'])
 def add_report():
     data = request.get_json()
-    
+
     if not data:
         return jsonify({
             'error': 'Report can not be saved'
         }), 400
-
-    reports = data.get('receipts')
 
     company_id = None
     data_from = data.get('date_from')
