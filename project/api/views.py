@@ -23,11 +23,11 @@ def reports():
     sum = 0
 
     for receipt in receipts:
-        if not report.get('total_price'):
+        if not receipt.get('total_price'):
             return jsonify({
                 'error': 'empty total_price'
             }), 400
-        sum += report.get('total_price')
+        sum += receipt.get('total_price')
 
     sum = str(sum)
 
