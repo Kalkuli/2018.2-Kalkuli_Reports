@@ -7,6 +7,16 @@ from project import db
 
 reports_blueprint = Blueprint('/report', __name__)
 
+@reports_blueprint.route('/get_reports', methods=['GET'])
+def get_all_reports():
+    response = {
+        'status': 'success',
+        'data': {
+            'reports': [reports.to_json() for reports in Report.query.all()]
+        }
+    }
+
+    return jsonify(response)
 
 @reports_blueprint.route('/report', methods=['POST'])
 def reports():
@@ -51,7 +61,8 @@ def add_report():
     company_id = None
     data_from = data.get('date_from')
     data_to = data.get('date_to')
-    total_cost = data.get('total_cost')
+    # total_cost = data.get('total_cost')
+    total_cost = None
     total_tax_cost = None
 
 
