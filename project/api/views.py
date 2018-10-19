@@ -61,7 +61,6 @@ def add_report():
     company_id = None
     data_from = data.get('date_from')
     data_to = data.get('date_to')
-    # total_cost = data.get('total_cost')
     total_cost = None
     total_tax_cost = None
 
