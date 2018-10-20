@@ -1,7 +1,15 @@
 import json
 import unittest
 from project.tests.base import BaseTestCase
+from project.api.models import Report
+from datetime import datetime
+from project import db
 
+def add_report(company_id, data_from, data_to, total_cost, total_tax_cost):
+    report = Report(company_id, data_from, data_to, total_cost, total_tax_cost)
+    db.session.add(report)
+    db.session.commit()
+    return report
 
 class TestReportService(BaseTestCase):
     
@@ -126,20 +134,27 @@ class TestReportService(BaseTestCase):
 
             self.assertEqual(response.status_code, 400)
 
-    def test_missing_total_cost(self):
-        with self.client:
-            response = self.client.post(
-                '/add_report',
-                data = json.dumps({
-                    "date_to": "2018-02-12",
-                    "date_from": "2018-02-22"
-                }), 
-                content_type = 'application/json',
-            )
+    def test_get_all_receipts(self):
+        start = "22-09-2018"
+        end = "22-11-2018"
 
+        dateStart = datetime.strptime(start, '%d-%m-%Y').date()
+        dateEnd = datetime.strptime(end, '%d-%m-%Y').date()
+
+        start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+        end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+        add_report(None, dateStart, dateEnd, None, None)
+
+        with self.client:
+            response = self.client.get('/get_reports')
             data = json.loads(response.data.decode())
 
-            self.assertEqual(response.status_code, 400)
-        
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(data['data']['reports']), 1)
+
+            self.assertEqual(start, data['data']['reports'][0]['date_from'])
+            self.assertEqual(end, data['data']['reports'][0]['date_to'])
+
 if __name__ == '__main__':
     unittest.main()
