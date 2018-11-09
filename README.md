@@ -10,9 +10,16 @@
  </div> 
 
 
-## Deploy    
+## Ambientes
 
-A ultima versão do app pode ser encontrada em: https://kalkuli-reports.herokuapp.com
+### Produção
+Para acessar o ambiente de produção utilize o link abaixo: 
+```https://kalkuli-reports.herokuapp.com/```
+
+### Homologação
+Para acessar o ambiente de homologação clique no link abaixo:
+```https://kalkuli-reports-hom.herokuapp.com/```
+
 
 ***   
 
