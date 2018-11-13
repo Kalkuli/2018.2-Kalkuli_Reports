@@ -1,7 +1,3 @@
-from flask.cli import FlaskGroup
-from project import app, db
-from project.api.models import Report, TagUseReport
-import unittest
 import coverage
 
 COV = coverage.coverage(
@@ -13,6 +9,11 @@ COV = coverage.coverage(
     ]
 )
 COV.start()
+
+from flask.cli import FlaskGroup
+from project import app, db
+from project.api.models import Report, TagUseReport
+import unittest
 
 cli = FlaskGroup(app)
 
