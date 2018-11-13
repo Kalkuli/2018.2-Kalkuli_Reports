@@ -151,5 +151,25 @@ class TestReportService(BaseTestCase):
             self.assertEqual(start, data['data']['reports'][0]['date_from'])
             self.assertEqual(end, data['data']['reports'][0]['date_to'])
 
+    def test_remove_report(self):
+        start = "22-09-2018"
+        end = "22-11-2018"
+
+        dateStart = datetime.strptime(start, '%d-%m-%Y').date()
+        dateEnd = datetime.strptime(end, '%d-%m-%Y').date()
+
+        start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+        end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+        report = add_report(None, dateStart, dateEnd, None, None)
+
+        with self.client:
+            response = self.client.delete(f'/report/{report.id}')
+            data = json.loads(response.data.decode())
+
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('Success', data['status'])
+            self.assertIn('Report deleted', data['data']['message'])
+
 if __name__ == '__main__':
     unittest.main()
