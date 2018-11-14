@@ -81,3 +81,26 @@ def add_report():
         return jsonify({
             'error': 'Report can not be saved'
         }), 400
+
+@reports_blueprint.route('/report/<report_id>', methods=['DELETE'])
+def delete_report(report_id):
+    error_response = {
+        'status': 'Fail',
+        'message': 'Report not found' 
+    }
+
+    try:
+        report = Report.query.filter_by(id=int(report_id)).first()
+        db.session.delete(report)
+        db.session.commit()
+        
+        reponse = {
+            'status': 'Success',
+            'data': {
+                'message': 'Report deleted'
+            }
+        }
+    except ValueError:
+        return jsonify(error_response), 404
+    
+    return jsonify(reponse), 200
