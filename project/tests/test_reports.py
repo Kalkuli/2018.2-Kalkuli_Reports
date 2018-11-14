@@ -7,13 +7,6 @@ from project import db
 from project.tests.utils import add_report
 
 class TestReportService(BaseTestCase):
-    
-    def test_reports(self):
-        response = self.client.get('/')
-        data = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 200)
-        self.assertIn('Welcome to Kalkuli Reports Service!', data['data'])
-
     def test_reports(self):
         with self.client:
             response = self.client.post(
@@ -129,7 +122,7 @@ class TestReportService(BaseTestCase):
 
             self.assertEqual(response.status_code, 400)
 
-    def test_get_all_receipts(self):
+    def test_get_all_reports(self):
         start = "22-09-2018"
         end = "22-11-2018"
 
@@ -139,10 +132,11 @@ class TestReportService(BaseTestCase):
         start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
         end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        add_report(None, dateStart, dateEnd, None, None)
+        add_report(1, dateStart, dateEnd, None, None)
+        add_report(2, dateStart, dateEnd, None, None)
 
         with self.client:
-            response = self.client.get('/get_reports')
+            response = self.client.get('/1/get_reports')
             data = json.loads(response.data.decode())
 
             self.assertEqual(response.status_code, 200)
@@ -170,6 +164,26 @@ class TestReportService(BaseTestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIn('Success', data['status'])
             self.assertIn('Report deleted', data['data']['message'])
+
+    def test_remove_report_report_not_found(self):
+        start = "22-09-2018"
+        end = "22-11-2018"
+
+        dateStart = datetime.strptime(start, '%d-%m-%Y').date()
+        dateEnd = datetime.strptime(end, '%d-%m-%Y').date()
+
+        start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+        end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
+
+        report = add_report(1, dateStart, dateEnd, None, None)
+
+        with self.client:
+            response = self.client.delete(f'/report/123')
+            data = json.loads(response.data.decode())
+
+            self.assertEqual(response.status_code, 404)
+            self.assertIn('Fail', data['status'])
+            self.assertIn('Report not found', data['message'])
 
 if __name__ == '__main__':
     unittest.main()
