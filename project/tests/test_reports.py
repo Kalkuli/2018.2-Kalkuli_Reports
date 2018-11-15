@@ -155,10 +155,10 @@ class TestReportService(BaseTestCase):
         start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
         end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        report = add_report(None, dateStart, dateEnd, None, None)
+        report = add_report(1, dateStart, dateEnd, None, None)
 
         with self.client:
-            response = self.client.delete(f'/report/{report.id}')
+            response = self.client.delete(f'/1/report/{report.id}')
             data = json.loads(response.data.decode())
 
             self.assertEqual(response.status_code, 200)
@@ -178,7 +178,7 @@ class TestReportService(BaseTestCase):
         report = add_report(1, dateStart, dateEnd, None, None)
 
         with self.client:
-            response = self.client.delete(f'/report/123')
+            response = self.client.delete(f'/1/report/123')
             data = json.loads(response.data.decode())
 
             self.assertEqual(response.status_code, 404)
