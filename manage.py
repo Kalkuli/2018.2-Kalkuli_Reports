@@ -14,6 +14,7 @@ from flask.cli import FlaskGroup
 from project import app, db
 from project.api.models import Report
 import unittest
+from populate import seedReports
 
 cli = FlaskGroup(app)
 
@@ -24,6 +25,11 @@ def recreatedb():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
+#Populate Functions
+@cli.command()
+def seed():
+    seedReports(db)
 
 
 # Registers comand to run tests
