@@ -1,6 +1,7 @@
 import os
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # Instantiate the app
 app = Flask(__name__)
@@ -13,6 +14,7 @@ app.config.from_object(app_settings)
 
 # Instanciate Database
 db	=	SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 from project.api.views import reports_blueprint
 
