@@ -62,12 +62,10 @@ def add_report():
     tag_id = data.get('tag_id')
     data_from = data.get('date_from')
     data_to = data.get('date_to')
-    total_cost = None
-    total_tax_cost = None
 
 
     try:
-        report = Report(company_id, tag_id, data_from, data_to, total_cost, total_tax_cost)
+        report = Report(company_id, tag_id, data_from, data_to)
         db.session.add(report)
         db.session.commit()
 
