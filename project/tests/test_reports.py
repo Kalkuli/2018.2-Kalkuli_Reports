@@ -67,9 +67,10 @@ class TestReportService(BaseTestCase):
             response = self.client.post(
                 '/add_report',
                 data = json.dumps({
+                    "category_id": "1234",
+                    "tag_id": "1",
                     "date_to": "2018-02-23",
-                    "date_from": "2018-02-12",
-                    "total_cost": "123"
+                    "date_from": "2018-02-12"
                 }),
                 content_type = 'application/json',
             )
@@ -97,8 +98,9 @@ class TestReportService(BaseTestCase):
             response = self.client.post(
                 '/add_report',
                 data = json.dumps({
+                    "category_id": "1234",
+                    "tag_id": "1",
                     "date_from": "2018-02-12",
-                    "total_cost": "123"
                 }), 
                 content_type = 'application/json',
             )
@@ -112,8 +114,9 @@ class TestReportService(BaseTestCase):
             response = self.client.post(
                 '/add_report',
                 data = json.dumps({
-                    "date_to": "2018-02-12",
-                    "total_cost": "123"
+                    "category_id": "1234",
+                    "tag_id": "1",
+                    "date_to": "2018-02-12"
                 }), 
                 content_type = 'application/json',
             )
@@ -132,8 +135,8 @@ class TestReportService(BaseTestCase):
         start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
         end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        add_report(1, dateStart, dateEnd, None, None)
-        add_report(2, dateStart, dateEnd, None, None)
+        add_report(1, 2, dateStart, dateEnd)
+        add_report(2, 3, dateStart, dateEnd)
 
         with self.client:
             response = self.client.get('/1/get_reports')
@@ -155,7 +158,7 @@ class TestReportService(BaseTestCase):
         start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
         end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        report = add_report(1, dateStart, dateEnd, None, None)
+        report = add_report(1, 2, dateStart, dateEnd)
 
         with self.client:
             response = self.client.delete(f'/1/report/{report.id}')
@@ -175,7 +178,7 @@ class TestReportService(BaseTestCase):
         start = datetime.strptime(start, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
         end = datetime.strptime(end, '%d-%m-%Y').strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        report = add_report(1, dateStart, dateEnd, None, None)
+        report = add_report(1, 2, dateStart, dateEnd)
 
         with self.client:
             response = self.client.delete(f'/1/report/123')
