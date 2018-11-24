@@ -93,37 +93,6 @@ class TestReportService(BaseTestCase):
 
             self.assertEqual(response.status_code, 400)
 
-    def test_missing_date_to(self):
-        with self.client:
-            response = self.client.post(
-                '/add_report',
-                data = json.dumps({
-                    "category_id": "1234",
-                    "tag_id": "1",
-                    "date_from": "2018-02-12",
-                }), 
-                content_type = 'application/json',
-            )
-
-            data = json.loads(response.data.decode())
-
-            self.assertEqual(response.status_code, 400)
-
-    def test_missing_date_from(self):
-        with self.client:
-            response = self.client.post(
-                '/add_report',
-                data = json.dumps({
-                    "category_id": "1234",
-                    "tag_id": "1",
-                    "date_to": "2018-02-12"
-                }), 
-                content_type = 'application/json',
-            )
-
-            data = json.loads(response.data.decode())
-
-            self.assertEqual(response.status_code, 400)
 
     def test_get_all_reports(self):
         start = "22-09-2018"
