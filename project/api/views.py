@@ -18,36 +18,6 @@ def get_all_reports(company_id):
 
     return jsonify(response)
 
-@reports_blueprint.route('/report', methods=['POST'])
-def reports():
-
-    data = request.get_json()
-
-    if not data:
-        return jsonify({
-            'error': 'empty json'
-        }), 400
-
-    receipts = data.get('receipts')
-
-    sum = 0
-
-    for receipt in receipts:
-        if not receipt.get('total_price'):
-            return jsonify({
-                'error': 'empty total_price'
-            }), 400
-        sum += receipt.get('total_price')
-
-    sum = str(sum)
-
-    return jsonify({
-        'receipts': receipts,
-        'total_cost': sum 
-    }), 200
-
-
-
 
 @reports_blueprint.route('/add_report', methods=['POST'])
 def add_report():

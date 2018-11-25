@@ -7,60 +7,6 @@ from project import db
 from project.tests.utils import add_report
 
 class TestReportService(BaseTestCase):
-    def test_reports(self):
-        with self.client:
-            response = self.client.post(
-                '/report',
-                data = json.dumps({
-                    'receipts': [
-                        {
-                            'total_price': 12
-                        },
-                        {
-                            'total_price': 13
-                        }
-                    ]
-                }),
-                content_type = 'application/json',
-            )
-
-            data = json.loads(response.data.decode())
-
-            self.assertEqual(response.status_code, 200)
-            self.assertIn( '25', data['total_cost'])
-
-    def test_empty_json_report(self):
-        with self.client:
-            response = self.client.post(
-                '/report',
-                data = json.dumps({}), 
-                content_type = 'application/json',
-            )
-
-            data = json.loads(response.data.decode())
-
-            self.assertEqual(response.status_code, 400)
-
-    def test_missing_total_price(self):
-        with self.client:
-            response = self.client.post(
-                '/report',
-                data = json.dumps({
-                    'receipts': [
-                        {
-
-                        }, 
-                        {
-                            'total_price': 12
-                        }
-                    ]
-                }), 
-                content_type = 'application/json',
-            )
-
-            data = json.loads(response.data.decode())
-
-            self.assertEqual(response.status_code, 400)
 
     def test_add_report(self):
         with self.client:
