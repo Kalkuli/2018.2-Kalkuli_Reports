@@ -2,7 +2,7 @@
 
 <div style="text-align: center"> 
 
-<a href="https://travis-ci.com/Kalkuli/2018.2-Kalkuli_Reports"><img src="https://travis-ci.org/Kalkuli/2018.2-Kalkuli_Reports.svg?branch=master" /></a>
+<a href="https://travis-ci.com/Kalkuli/2018.2-Kalkuli_Reports"><img src="https://travis-ci.com/Kalkuli/2018.2-Kalkuli_Reports.svg?branch=master" /></a>
 <a href="https://codeclimate.com/github/Kalkuli/2018.2-Kalkuli_Reports/test_coverage"><img src="https://api.codeclimate.com/v1/badges/1f500530c8778423167f/test_coverage" /></a>
 <a href="https://codeclimate.com/github/Kalkuli/2018.2-Kalkuli_Reports/maintainability"><img src="https://api.codeclimate.com/v1/badges/1f500530c8778423167f/maintainability" /></a>
 <a href="https://opensource.org/licenses/GPL-3.0"><img src="https://img.shields.io/badge/license-GPL-%235DA8C1.svg"/></a>
