@@ -7,46 +7,16 @@ from project import db
 
 reports_blueprint = Blueprint('/report', __name__)
 
-@reports_blueprint.route('/get_reports', methods=['GET'])
-def get_all_reports():
+@reports_blueprint.route('/<company_id>/get_reports', methods=['GET'])
+def get_all_reports(company_id):
     response = {
         'status': 'success',
         'data': {
-            'reports': [reports.to_json() for reports in Report.query.all()]
+            'reports': [reports.to_json() for reports in Report.query.filter_by(company_id=int(company_id))]
         }
     }
 
     return jsonify(response)
-
-@reports_blueprint.route('/report', methods=['POST'])
-def reports():
-
-    data = request.get_json()
-
-    if not data:
-        return jsonify({
-            'error': 'empty json'
-        }), 400
-
-    receipts = data.get('receipts')
-
-    sum = 0
-
-    for receipt in receipts:
-        if not receipt.get('total_price'):
-            return jsonify({
-                'error': 'empty total_price'
-            }), 400
-        sum += receipt.get('total_price')
-
-    sum = str(sum)
-
-    return jsonify({
-        'receipts': receipts,
-        'total_cost': sum 
-    }), 200
-
-
 
 
 @reports_blueprint.route('/add_report', methods=['POST'])
@@ -58,15 +28,14 @@ def add_report():
             'error': 'Report can not be saved'
         }), 400
 
-    company_id = None
+    company_id = data.get('company_id')
+    tag_id = data.get('tag_id')
     data_from = data.get('date_from')
     data_to = data.get('date_to')
-    total_cost = None
-    total_tax_cost = None
 
 
     try:
-        report = Report(company_id, data_from, data_to, total_cost, total_tax_cost)
+        report = Report(company_id, tag_id, data_from, data_to)
         db.session.add(report)
         db.session.commit()
 
@@ -81,3 +50,27 @@ def add_report():
         return jsonify({
             'error': 'Report can not be saved'
         }), 400
+
+@reports_blueprint.route('/<company_id>/report/<report_id>', methods=['DELETE'])
+def delete_report(company_id, report_id):
+    error_response = {
+        'status': 'Fail',
+        'message': 'Report not found' 
+    }
+
+    report = Report.query.filter_by(id=int(report_id), company_id=int(company_id)).first()
+
+    if not report:
+        return jsonify(error_response), 404
+
+    db.session.delete(report)
+    db.session.commit()
+    
+    reponse = {
+        'status': 'Success',
+        'data': {
+            'message': 'Report deleted'
+        }
+    }
+
+    return jsonify(reponse), 200
